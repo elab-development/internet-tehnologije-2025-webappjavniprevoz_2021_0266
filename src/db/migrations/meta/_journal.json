@@ -8,6 +8,41 @@
       "when": 1769883511483,
       "tag": "0000_sharp_black_panther",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1770065290361,
+      "tag": "0001_tiresome_zaran",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1770065315594,
+      "tag": "0002_cultured_praxagora",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1770065712859,
+      "tag": "0003_worried_warstar",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1770066158327,
+      "tag": "0004_lush_gabe_jones",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1770066725951,
+      "tag": "0005_neat_mariko_yashida",
+      "breakpoints": true
     }
   ]
 }

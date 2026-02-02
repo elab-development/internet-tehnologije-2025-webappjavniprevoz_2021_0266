@@ -41,6 +41,7 @@ export async function POST(request: Request) {
         sub: noviKorisnik.idKorisnik.toString(),
         email: noviKorisnik.email,
         korisnickoIme: noviKorisnik.korisnickoIme,
+        admin: noviKorisnik.admin
     })
     //stavljanje kolacica
     const response = NextResponse.json({message: "Uspesno registrovan korisnik", idKorisnik: noviKorisnik.idKorisnik, email: noviKorisnik.email}, {status:200});

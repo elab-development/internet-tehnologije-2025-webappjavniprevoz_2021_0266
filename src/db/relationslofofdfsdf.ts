@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm/relations";
-import { tipprevoza, linija, linijanastajalistu, stajaliste, korisnik, omiljenastajalista, omiljenjelinije } from "./schema";
+import { tipprevoza, linija, linijanastajalistu, stajaliste, korisnik, omiljenastajalista, omiljenelinije } from "./schema";
 
 export const linijaRelations = relations(linija, ({one, many}) => ({
 	tipprevoza: one(tipprevoza, {
@@ -7,7 +7,7 @@ export const linijaRelations = relations(linija, ({one, many}) => ({
 		references: [tipprevoza.idTipaVozila]
 	}),
 	linijanastajalistus: many(linijanastajalistu),
-	omiljenjelinijes: many(omiljenjelinije),
+	omiljenelinijes: many(omiljenelinije),
 }));
 
 export const tipprevozaRelations = relations(tipprevoza, ({many}) => ({
@@ -43,16 +43,16 @@ export const omiljenastajalistaRelations = relations(omiljenastajalista, ({one})
 
 export const korisnikRelations = relations(korisnik, ({many}) => ({
 	omiljenastajalistas: many(omiljenastajalista),
-	omiljenjelinijes: many(omiljenjelinije),
+	omiljenjelinijes: many(omiljenelinije),
 }));
 
-export const omiljenjelinijeRelations = relations(omiljenjelinije, ({one}) => ({
+export const omiljenjelinijeRelations = relations(omiljenelinije, ({one}) => ({
 	korisnik: one(korisnik, {
-		fields: [omiljenjelinije.idKorisnik],
+		fields: [omiljenelinije.idKorisnik],
 		references: [korisnik.idKorisnik]
 	}),
 	linija: one(linija, {
-		fields: [omiljenjelinije.idLinije],
+		fields: [omiljenelinije.idLinije],
 		references: [linija.idLinije]
 	}),
 }));

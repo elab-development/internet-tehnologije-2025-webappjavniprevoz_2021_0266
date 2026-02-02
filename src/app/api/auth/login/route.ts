@@ -34,9 +34,10 @@ export async function POST(request: Request) {
         sub: k.idKorisnik.toString(),
         email: k.email,
         korisnickoIme: k.korisnickoIme,
+        admin: k.admin
     })
     //stavljanje kolacica
-    const response = NextResponse.json({message: "Uspesno logovanje", idKorisnik: k.idKorisnik, email: k.email}, {status:200});
+    const response = NextResponse.json({message: "Uspesno logovanje", idKorisnik: k.idKorisnik, email: k.email, admin: k.admin}, {status:200});
     response.cookies.set(AUTH_COOKIE, token, cookieOpts());
     //povrat korisnickog naloga
     return response;
