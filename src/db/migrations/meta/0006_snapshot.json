@@ -1,0 +1,519 @@
+{
+  "version": "5",
+  "dialect": "mysql",
+  "id": "d9fb3592-0783-4e24-8efc-d588acd37065",
+  "prevId": "e23a63ca-561f-46d3-8126-cf55b02e9b14",
+  "tables": {
+    "korisnik": {
+      "name": "korisnik",
+      "columns": {
+        "idKorisnik": {
+          "name": "idKorisnik",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "korisnickoIme": {
+          "name": "korisnickoIme",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "sifra": {
+          "name": "sifra",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "admin": {
+          "name": "admin",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        },
+        "uuid_token": {
+          "name": "uuid_token",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "reset_password_token": {
+          "name": "reset_password_token",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "token_expires_at": {
+          "name": "token_expires_at",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "korisnik_idKorisnik": {
+          "name": "korisnik_idKorisnik",
+          "columns": [
+            "idKorisnik"
+          ]
+        }
+      },
+      "uniqueConstraints": {
+        "unique_mail": {
+          "name": "unique_mail",
+          "columns": [
+            "email"
+          ]
+        },
+        "unique_uuid_token": {
+          "name": "unique_uuid_token",
+          "columns": [
+            "uuid_token"
+          ]
+        }
+      },
+      "checkConstraint": {}
+    },
+    "linija": {
+      "name": "linija",
+      "columns": {
+        "idLinije": {
+          "name": "idLinije",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "naziv": {
+          "name": "naziv",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "brojLinije": {
+          "name": "brojLinije",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "pocetnaStanica": {
+          "name": "pocetnaStanica",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "krajnjaStanica": {
+          "name": "krajnjaStanica",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "idTipVozila": {
+          "name": "idTipVozila",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "linija_idTipVozila_tipprevoza_idTipaVozila_fk": {
+          "name": "linija_idTipVozila_tipprevoza_idTipaVozila_fk",
+          "tableFrom": "linija",
+          "tableTo": "tipprevoza",
+          "columnsFrom": [
+            "idTipVozila"
+          ],
+          "columnsTo": [
+            "idTipaVozila"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {
+        "linija_idLinije": {
+          "name": "linija_idLinije",
+          "columns": [
+            "idLinije"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "linijanastajalistu": {
+      "name": "linijanastajalistu",
+      "columns": {
+        "idLinijaStajaliste": {
+          "name": "idLinijaStajaliste",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "idLinije": {
+          "name": "idLinije",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "idStajalista": {
+          "name": "idStajalista",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "Smer": {
+          "name": "Smer",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "redniBroj": {
+          "name": "redniBroj",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "linijanastajalistu_idLinije_linija_idLinije_fk": {
+          "name": "linijanastajalistu_idLinije_linija_idLinije_fk",
+          "tableFrom": "linijanastajalistu",
+          "tableTo": "linija",
+          "columnsFrom": [
+            "idLinije"
+          ],
+          "columnsTo": [
+            "idLinije"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "linijanastajalistu_idStajalista_stajaliste_idStajalista_fk": {
+          "name": "linijanastajalistu_idStajalista_stajaliste_idStajalista_fk",
+          "tableFrom": "linijanastajalistu",
+          "tableTo": "stajaliste",
+          "columnsFrom": [
+            "idStajalista"
+          ],
+          "columnsTo": [
+            "idStajalista"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "linijanastajalistu_idLinijaStajaliste": {
+          "name": "linijanastajalistu_idLinijaStajaliste",
+          "columns": [
+            "idLinijaStajaliste"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "omiljenastajalista": {
+      "name": "omiljenastajalista",
+      "columns": {
+        "idOmiljenaStajalista": {
+          "name": "idOmiljenaStajalista",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "idKorisnik": {
+          "name": "idKorisnik",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "idStajalista": {
+          "name": "idStajalista",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "omiljenastajalista_idKorisnik_korisnik_idKorisnik_fk": {
+          "name": "omiljenastajalista_idKorisnik_korisnik_idKorisnik_fk",
+          "tableFrom": "omiljenastajalista",
+          "tableTo": "korisnik",
+          "columnsFrom": [
+            "idKorisnik"
+          ],
+          "columnsTo": [
+            "idKorisnik"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "omiljenastajalista_idStajalista_stajaliste_idStajalista_fk": {
+          "name": "omiljenastajalista_idStajalista_stajaliste_idStajalista_fk",
+          "tableFrom": "omiljenastajalista",
+          "tableTo": "stajaliste",
+          "columnsFrom": [
+            "idStajalista"
+          ],
+          "columnsTo": [
+            "idStajalista"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "omiljenastajalista_idOmiljenaStajalista": {
+          "name": "omiljenastajalista_idOmiljenaStajalista",
+          "columns": [
+            "idOmiljenaStajalista"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "omiljenelinije": {
+      "name": "omiljenelinije",
+      "columns": {
+        "idOmiljeneLinije": {
+          "name": "idOmiljeneLinije",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "idKorisnik": {
+          "name": "idKorisnik",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "idLinije": {
+          "name": "idLinije",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "omiljenelinije_idKorisnik_korisnik_idKorisnik_fk": {
+          "name": "omiljenelinije_idKorisnik_korisnik_idKorisnik_fk",
+          "tableFrom": "omiljenelinije",
+          "tableTo": "korisnik",
+          "columnsFrom": [
+            "idKorisnik"
+          ],
+          "columnsTo": [
+            "idKorisnik"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "omiljenelinije_idLinije_linija_idLinije_fk": {
+          "name": "omiljenelinije_idLinije_linija_idLinije_fk",
+          "tableFrom": "omiljenelinije",
+          "tableTo": "linija",
+          "columnsFrom": [
+            "idLinije"
+          ],
+          "columnsTo": [
+            "idLinije"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "omiljenelinije_idOmiljeneLinije": {
+          "name": "omiljenelinije_idOmiljeneLinije",
+          "columns": [
+            "idOmiljeneLinije"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "stajaliste": {
+      "name": "stajaliste",
+      "columns": {
+        "idStajalista": {
+          "name": "idStajalista",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "naziv": {
+          "name": "naziv",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "latitude": {
+          "name": "latitude",
+          "type": "double",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "longitude": {
+          "name": "longitude",
+          "type": "double",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "brojStajalista": {
+          "name": "brojStajalista",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "stajaliste_idStajalista": {
+          "name": "stajaliste_idStajalista",
+          "columns": [
+            "idStajalista"
+          ]
+        }
+      },
+      "uniqueConstraints": {
+        "unique_brojStajalista": {
+          "name": "unique_brojStajalista",
+          "columns": [
+            "brojStajalista"
+          ]
+        }
+      },
+      "checkConstraint": {}
+    },
+    "tipprevoza": {
+      "name": "tipprevoza",
+      "columns": {
+        "idTipaVozila": {
+          "name": "idTipaVozila",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "nazivTipaVozila": {
+          "name": "nazivTipaVozila",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "tipprevoza_idTipaVozila": {
+          "name": "tipprevoza_idTipaVozila",
+          "columns": [
+            "idTipaVozila"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    }
+  },
+  "views": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {
+      "\"omiljenjelinije\"": "\"omiljenelinije\""
+    },
+    "columns": {}
+  },
+  "internal": {
+    "tables": {},
+    "indexes": {}
+  }
+}
