@@ -13,7 +13,22 @@ export function middleware(request: NextRequest) {
       const payload = decodeJwt(token) as { admin?: boolean };
       isAdmin = !!payload.admin;
     } catch (e) {
+      if (pathname.startsWith('/admin') || pathname.startsWith('/api/admin') || pathname.startsWith('/api/korisnik')) {
         return NextResponse.json({ error: "Nevalidan ili istekao token. Prijavite se ponovo." }, { status: 401 });
+      }
+    }
+  }
+
+
+  if (pathname.startsWith('/admin') || pathname.startsWith('/api/admin')) {
+    if (!token) {
+      if (!pathname.startsWith('/api/')) {
+        return NextResponse.redirect(new URL('/login', request.url));
+      }
+      return NextResponse.json({ error: "Niste ulogovani" }, { status: 401 });
+    }
+    if (!isAdmin) {
+      return NextResponse.json({ error: "Pristup odbijen: Niste admin" }, { status: 403 });
     }
   }
 
@@ -55,5 +70,7 @@ export const config = {
     '/api/tipPrevoza/:path*',
     '/api/linije-stajalista/:path*',
     '/api/korisnik/:path*',
+    '/api/admin/:path*', 
+    '/admin/:path*',     
   ],
 };

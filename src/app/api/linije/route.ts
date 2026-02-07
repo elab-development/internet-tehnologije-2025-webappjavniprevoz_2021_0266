@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    // JOIN operacija: spajamo liniju sa tipom prevoza
+    
     const rezultati = await db
       .select({
         idLinije: linija.idLinije,
@@ -13,7 +13,7 @@ export async function GET() {
         pocetna: linija.pocetnaStanica,
         krajnja: linija.krajnjaStanica,
         brojLinije: linija.brojLinije,
-        tipVozila: tipprevoza.nazivTipaVozila // Povlačimo naziv iz druge tabele
+        tipVozila: tipprevoza.nazivTipaVozila
       })
       .from(linija)
       .leftJoin(tipprevoza, eq(linija.idTipVozila, tipprevoza.idTipaVozila));
