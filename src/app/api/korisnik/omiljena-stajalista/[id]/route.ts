@@ -21,7 +21,6 @@ export async function DELETE(
         )
       );
 
-    // Provera da li je rekord tvoj i da li uopšte postoji
     if (result[0].affectedRows === 0) {
       return NextResponse.json({ error: "Zapis nije pronađen" }, { status: 404 });
     }

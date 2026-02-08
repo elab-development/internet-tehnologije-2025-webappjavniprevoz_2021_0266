@@ -17,7 +17,8 @@ export async function GET() {
       .select({
         idFavorita: omiljenelinije.idOmiljeneLinije,
         brojLinije: linija.brojLinije,
-        nazivLinije: linija.naziv
+        nazivLinije: linija.naziv,
+        idLinije: linija.idLinije
       })
       .from(omiljenelinije)
       .innerJoin(linija, eq(omiljenelinije.idLinije, linija.idLinije))
