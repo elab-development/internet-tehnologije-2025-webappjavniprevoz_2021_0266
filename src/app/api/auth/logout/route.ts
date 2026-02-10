@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { AUTH_COOKIE } from "@/lib/auth";
 
 export async function POST(){
-    const response = NextResponse.json({ok: true}, {status:200});
+    const response = NextResponse.redirect(new URL("/", process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"),{ status: 303});
     response.cookies.set(AUTH_COOKIE, "",{
         httpOnly: true, //xss zastita
         sameSite: "lax" as const, //csfr zastita

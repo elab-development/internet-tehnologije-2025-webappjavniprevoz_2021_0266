@@ -131,6 +131,8 @@ export default function GlavnaStrana() {
     } catch (e) { console.error(e); }
   };
 
+ 
+
   const prikazaneLinijeFinal = useMemo(() => {
     const baza = view === 'fav-linije' ? linije.filter(l => omiljeneLinije.some(f => Number(f.idLinije) === Number(l.idLinije))) : linije;
     return baza.filter(l => l.brojLinije.toLowerCase().includes(searchQuery.toLowerCase()));
@@ -177,7 +179,7 @@ export default function GlavnaStrana() {
                     <div className="absolute right-0 top-full mt-2 w-52 bg-white rounded-2xl shadow-2xl border border-slate-100 p-2 text-slate-700 z-50 font-bold text-[10px] uppercase">
                       <button onClick={() => { setView('fav-linije'); setIsMenuOpen(false); setActiveTab('linije'); }} className="w-full text-left px-4 py-3 hover:bg-slate-50 rounded-xl flex items-center gap-2"><Heart size={14} className="text-rose-500 fill-rose-500"/> Omiljene Linije</button>
                       <button onClick={() => { setView('fav-stanice'); setIsMenuOpen(false); setActiveTab('stanice'); }} className="w-full text-left px-4 py-3 hover:bg-slate-50 rounded-xl flex items-center gap-2"><MapPin size={14} className="text-indigo-500"/> Omiljene Stanice</button>
-                      <button onClick={() => router.push('/')} className="w-full text-left px-4 py-3 text-rose-500 hover:bg-rose-50 rounded-xl flex items-center gap-2 border-t mt-1"><LogOut size={14}/> Odjava</button>
+                      <button onClick={() => fetch("/api/auth/logout", { method: "POST" }).then(() => window.location.href = "/")} className="w-full text-left px-4 py-3 text-rose-500 hover:bg-rose-50 rounded-xl flex items-center gap-2 border-t mt-1"><LogOut size={14}/> Odjava</button>
                     </div>
                   )}
                 </>
@@ -218,8 +220,9 @@ export default function GlavnaStrana() {
             prikazanaStajalistaFinal.map(s => (
               <div key={s.idStajalista} onClick={() => handleMarkerClick({...s, lat: Number(s.latitude || s.lat), lng: Number(s.longitude || s.lng)})} className="p-5 bg-white border-2 border-slate-100 rounded-3xl flex justify-between items-center cursor-pointer">
                 <div>
-                  <span className="text-[11px] font-black text-indigo-600 block">#{s.brojStajalista || s.idStajalista}</span>
+                  <span className="text-[11px] font-black text-indigo-600 block">#{s.brojStajalista}</span>
                   <p className="font-bold text-slate-800 uppercase">{s.naziv}</p>
+                  
                 </div>
                 <button onClick={(e) => handleStajalisteHeartClick(e, s)}>
                   {!isLoggedIn ? (
