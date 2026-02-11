@@ -4,6 +4,9 @@ import { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { GoogleMap, useJsApiLoader, Polyline, Marker, InfoWindow } from '@react-google-maps/api';
 import { Heart, LogOut, MapPin, ChevronDown, ArrowLeft, CheckCircle2, Bus, Lock, UserCircle } from 'lucide-react';
+import { Linija } from '@/app/komponente/linija';
+import { Stajaliste } from '@/app/komponente/stajaliste';
+import {StajalisteInfoWindow } from '@/app/komponente/StajalisteInfoWindow';
 
 const BOJE_TIPA: Record<string, string> = {
   'Autobus': '#3b82f6',
@@ -197,41 +200,28 @@ export default function GlavnaStrana() {
         <div className="flex-1 overflow-y-auto p-6 space-y-4 bg-white">
           {activeTab === 'linije' ? (
                prikazaneLinijeFinal.map(l => (
-                <div key={l.idLinije} onClick={() => DOZVOLJENE_LINIJE.includes(l.brojLinije) && handlePrikaziLiniju(l)} className={`p-6 rounded-[2rem] border-2 transition-all ${!DOZVOLJENE_LINIJE.includes(l.brojLinije) ? 'opacity-40 grayscale cursor-not-allowed' : 'cursor-pointer'} ${selektovanaLinija?.idLinije === l.idLinije ? 'border-indigo-600 bg-indigo-50/30' : 'bg-white border-slate-100'}`}>
-                  <div className="flex justify-between items-start">
-                    <div className="flex flex-col">
-                      <span className="text-5xl font-black text-indigo-600">{l.brojLinije}</span>
-                      <span className="text-[11px] font-bold mt-3 uppercase text-slate-400">{l.naziv}</span>
-                    </div>
-                    <div className="flex flex-col items-end gap-4">
-                      <span className="px-4 py-1.5 rounded-full text-[10px] font-black text-white shadow-sm" style={{ backgroundColor: BOJE_TIPA[l.tipVozila] || '#3b82f6' }}>{l.tipVozila}</span>
-                      <button onClick={(e) => handleLinijaHeartClick(e, l)}>
-                        {!isLoggedIn ? (
-                          <Lock size={20} className="text-slate-200 hover:text-indigo-400 transition-colors" />
-                        ) : (
-                          <Heart size={24} className={omiljeneLinije.some(f => Number(f.idLinije) === Number(l.idLinije)) ? "fill-rose-500 text-rose-500" : "text-slate-200"} />
-                        )}
-                      </button>
-                    </div>
-                  </div>
-                </div>
+                <Linija 
+                      key={l.idLinije}
+                      linija={l}
+                      isSelected={selektovanaLinija?.idLinije === l.idLinije}
+                      isLoggedIn={isLoggedIn}
+                      isFavorite={omiljeneLinije.some(f => Number(f.idLinije) === Number(l.idLinije))}
+                      onSelect={handlePrikaziLiniju}
+                      onHeartClick={handleLinijaHeartClick}
+                      bojaTipa={BOJE_TIPA[l.tipVozila] || '#3b82f6'}
+                      isAllowed={DOZVOLJENE_LINIJE.includes(l.brojLinije)}
+                />
               ))
           ) : (
             prikazanaStajalistaFinal.map(s => (
-              <div key={s.idStajalista} onClick={() => handleMarkerClick({...s, lat: Number(s.latitude || s.lat), lng: Number(s.longitude || s.lng)})} className="p-5 bg-white border-2 border-slate-100 rounded-3xl flex justify-between items-center cursor-pointer">
-                <div>
-                  <span className="text-[11px] font-black text-indigo-600 block">#{s.brojStajalista}</span>
-                  <p className="font-bold text-slate-800 uppercase">{s.naziv}</p>
-                  
-                </div>
-                <button onClick={(e) => handleStajalisteHeartClick(e, s)}>
-                  {!isLoggedIn ? (
-                    <Lock size={20} className="text-slate-200 hover:text-indigo-400 transition-colors" />
-                  ) : (
-                    <Heart size={24} className={omiljenaStajalista.some(f => Number(f.idStajalista) === Number(s.idStajalista)) ? "fill-rose-500 text-rose-500" : "text-slate-200"} />
-                  )}
-                </button>
-              </div>
+              <Stajaliste
+                  key={s.idStajalista}
+                  station={s}
+                  isLoggedIn={isLoggedIn}
+                  isFavorite={omiljenaStajalista.some(f => Number(f.idStajalista) === Number(s.idStajalista))}
+                  onSelect={handleMarkerClick}
+                  onHeartClick={handleStajalisteHeartClick}
+                />
             ))
           )}
         </div>
@@ -249,19 +239,12 @@ export default function GlavnaStrana() {
               </>
             )}
             {selectedMarker && (
-              <InfoWindow position={{ lat: selectedMarker.lat, lng: selectedMarker.lng }} onCloseClick={() => setSelectedMarker(null)}>
-                <div className="p-2 min-w-[170px] bg-white text-slate-900">
-                  <p className="font-black text-[10px] text-slate-400 uppercase mb-1">Stajalište #{selectedMarker.brojStajalista || selectedMarker.idStajalista}</p>
-                  <p className="font-bold text-[14px] uppercase mb-4">{selectedMarker.naziv || selectedMarker.stajaliste}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {linijeNaStajalistu.map((l: any) => (
-                      <div key={l.brojLinije} className="w-10 h-10 flex items-center justify-center rounded-xl text-white text-[12px] font-black shadow-md" style={{ backgroundColor: BOJE_TIPA[l.tipVozila] || '#3b82f6' }}>
-                        {l.brojLinije}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </InfoWindow>
+              <StajalisteInfoWindow
+                selectedMarker={selectedMarker}
+                linijeNaStajalistu={linijeNaStajalistu}
+                onClose={() => setSelectedMarker(null)}
+                bojeTipa={BOJE_TIPA}
+              />
             )}
           </GoogleMap>
         )}
