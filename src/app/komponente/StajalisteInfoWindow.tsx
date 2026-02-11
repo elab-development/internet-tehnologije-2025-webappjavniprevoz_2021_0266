@@ -7,6 +7,7 @@ interface StationInfoWindowProps {
   onClose: () => void;
   bojeTipa: Record<string, string>;
 }
+//komentar
 
 export const StajalisteInfoWindow = ({ selectedMarker, linijeNaStajalistu, onClose, bojeTipa }: StationInfoWindowProps) => {
   return (
