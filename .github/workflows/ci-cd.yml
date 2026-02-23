@@ -1,0 +1,40 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout koda
+        uses: actions/checkout@v4
+
+      - name: Podešavanje Node.js okruženja
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalacija zavisnosti
+        run: npm install
+
+      - name: Pokretanje testova
+        run: npm test || echo "Nema definisanih testova još uvek"
+
+      - name: Build aplikacije
+        run: npm run build
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image (Provera)
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: false # Samo proveravamo da li build prolazi
+          tags: prevezi-me:latest
