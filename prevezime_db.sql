@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 05, 2026 at 08:17 PM
+-- Generation Time: Feb 23, 2026 at 12:59 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -27,6 +27,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `korisnik`
 --
 
+DROP TABLE IF EXISTS `korisnik`;
 CREATE TABLE `korisnik` (
   `idKorisnik` int(11) NOT NULL,
   `korisnickoIme` varchar(255) NOT NULL,
@@ -45,7 +46,9 @@ CREATE TABLE `korisnik` (
 
 INSERT INTO `korisnik` (`idKorisnik`, `korisnickoIme`, `email`, `sifra`, `uuid_token`, `reset_password_token`, `token_expires_at`, `created_at`, `admin`) VALUES
 (1, 'testkorisnik', 'test@gmail.com', '$2b$10$mx25Oyen/WFOEA2emGiu4eYH.aF.EuTcmBeg6H0L6xG/FPTGnH2oC', NULL, NULL, NULL, '2026-02-02 21:17:05', 0),
-(2, 'admin', 'admin@gmail.com', '$2b$10$mx25Oyen/WFOEA2emGiu4eYH.aF.EuTcmBeg6H0L6xG/FPTGnH2oC', NULL, NULL, NULL, '2026-02-02 21:17:05', 1);
+(2, 'admin', 'admin@gmail.com', '$2b$10$mx25Oyen/WFOEA2emGiu4eYH.aF.EuTcmBeg6H0L6xG/FPTGnH2oC', NULL, NULL, NULL, '2026-02-02 21:17:05', 1),
+(3, 'loklklk', 'gjhgjhg@jlkjlkjlk', '$2b$10$U9balr8oeBVoWmZD3v32re952gm21Im0MWprQFF4ZBWApxoYxB4LO', NULL, NULL, NULL, '2026-02-10 15:46:14', 0),
+(4, 'testtest', 'testtest@gmail.com', '$2b$10$LZsehdfDDyyHbkPlYnwTD.HbPFagvV9hON7bbzh94s.sWuEM2S0cm', NULL, NULL, NULL, '2026-02-11 12:43:53', 0);
 
 -- --------------------------------------------------------
 
@@ -53,6 +56,7 @@ INSERT INTO `korisnik` (`idKorisnik`, `korisnickoIme`, `email`, `sifra`, `uuid_t
 -- Table structure for table `linija`
 --
 
+DROP TABLE IF EXISTS `linija`;
 CREATE TABLE `linija` (
   `idLinije` int(11) NOT NULL,
   `brojLinije` varchar(255) NOT NULL,
@@ -76,8 +80,7 @@ INSERT INTO `linija` (`idLinije`, `brojLinije`, `naziv`, `pocetnaStanica`, `kraj
 (7, '67', 'Novi Beograd (Blok 70A) - Zeleni venac', 'Novi Beograd (Blok 70A) ', 'Zeleni venac', 1),
 (8, '511', 'Beograd na vodi - Sremčica\r\n', 'Beograd na vodi', 'Sremčica', 1),
 (9, '31', 'Studentski trg - Konjarnik', 'Studentski trg', 'Konjarnik', 1),
-(10, '41', 'Studentski Trg - Banjica 2\r\n', 'Studentski trg', 'Banjica 2', 3),
-(12, '100', 'Test Linija - Centar', 'Trg Republike', 'Novi Beograd', 1);
+(10, '41', 'Studentski Trg - Banjica 2\r\n', 'Studentski trg', 'Banjica 2', 3);
 
 -- --------------------------------------------------------
 
@@ -85,6 +88,7 @@ INSERT INTO `linija` (`idLinije`, `brojLinije`, `naziv`, `pocetnaStanica`, `kraj
 -- Table structure for table `linijanastajalistu`
 --
 
+DROP TABLE IF EXISTS `linijanastajalistu`;
 CREATE TABLE `linijanastajalistu` (
   `idLinijaStajaliste` int(11) NOT NULL,
   `idLinije` int(11) NOT NULL,
@@ -215,8 +219,7 @@ INSERT INTO `linijanastajalistu` (`idLinijaStajaliste`, `idLinije`, `idStajalist
 (116, 7, 8985, 1, 12),
 (117, 7, 8983, 1, 13),
 (118, 7, 9298, 1, 14),
-(119, 7, 9296, 1, 15),
-(121, 7, 8223, 0, 2);
+(119, 7, 9296, 1, 15);
 
 -- --------------------------------------------------------
 
@@ -224,6 +227,7 @@ INSERT INTO `linijanastajalistu` (`idLinijaStajaliste`, `idLinije`, `idStajalist
 -- Table structure for table `omiljenastajalista`
 --
 
+DROP TABLE IF EXISTS `omiljenastajalista`;
 CREATE TABLE `omiljenastajalista` (
   `idOmiljenaStajalista` int(11) NOT NULL,
   `idKorisnik` int(11) NOT NULL,
@@ -236,7 +240,8 @@ CREATE TABLE `omiljenastajalista` (
 --
 
 INSERT INTO `omiljenastajalista` (`idOmiljenaStajalista`, `idKorisnik`, `idStajalista`, `created_at`) VALUES
-(1, 1, 8222, '2026-02-02 21:16:57');
+(1, 1, 8222, '2026-02-02 21:16:57'),
+(5, 1, 8269, '2026-02-10 15:44:22');
 
 -- --------------------------------------------------------
 
@@ -244,6 +249,7 @@ INSERT INTO `omiljenastajalista` (`idOmiljenaStajalista`, `idKorisnik`, `idStaja
 -- Table structure for table `omiljenelinije`
 --
 
+DROP TABLE IF EXISTS `omiljenelinije`;
 CREATE TABLE `omiljenelinije` (
   `idOmiljeneLinije` int(11) NOT NULL,
   `idKorisnik` int(11) NOT NULL,
@@ -257,7 +263,7 @@ CREATE TABLE `omiljenelinije` (
 
 INSERT INTO `omiljenelinije` (`idOmiljeneLinije`, `idKorisnik`, `idLinije`, `created_at`) VALUES
 (1, 2, 1, '2026-02-02 21:17:02'),
-(4, 2, 7, '2026-02-02 22:18:26');
+(6, 1, 2, '2026-02-10 15:44:02');
 
 -- --------------------------------------------------------
 
@@ -265,6 +271,7 @@ INSERT INTO `omiljenelinije` (`idOmiljeneLinije`, `idKorisnik`, `idLinije`, `cre
 -- Table structure for table `stajaliste`
 --
 
+DROP TABLE IF EXISTS `stajaliste`;
 CREATE TABLE `stajaliste` (
   `idStajalista` int(11) NOT NULL,
   `brojStajalista` int(10) NOT NULL,
@@ -3546,8 +3553,7 @@ INSERT INTO `stajaliste` (`idStajalista`, `brojStajalista`, `naziv`, `latitude`,
 (11484, 9591, 'Petar Drapšin', 44.4481184, 20.68669089),
 (11485, 9662, 'Stanojevac', 44.48995055, 20.65735328),
 (11486, 9663, 'Stanojevac', 44.49098577, 20.65745333),
-(11487, 9771, '?urinci - Izlaz', 44.51621151, 20.62346987),
-(12325, 9999, 'Testna Stanica 1', 44.815, 20.46);
+(11487, 9771, '?urinci - Izlaz', 44.51621151, 20.62346987);
 
 -- --------------------------------------------------------
 
@@ -3555,6 +3561,7 @@ INSERT INTO `stajaliste` (`idStajalista`, `brojStajalista`, `naziv`, `latitude`,
 -- Table structure for table `tipprevoza`
 --
 
+DROP TABLE IF EXISTS `tipprevoza`;
 CREATE TABLE `tipprevoza` (
   `idTipaVozila` int(11) NOT NULL,
   `nazivTipaVozila` varchar(255) NOT NULL
@@ -3634,13 +3641,13 @@ ALTER TABLE `tipprevoza`
 -- AUTO_INCREMENT for table `korisnik`
 --
 ALTER TABLE `korisnik`
-  MODIFY `idKorisnik` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idKorisnik` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `linija`
 --
 ALTER TABLE `linija`
-  MODIFY `idLinije` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `idLinije` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `linijanastajalistu`
@@ -3652,19 +3659,19 @@ ALTER TABLE `linijanastajalistu`
 -- AUTO_INCREMENT for table `omiljenastajalista`
 --
 ALTER TABLE `omiljenastajalista`
-  MODIFY `idOmiljenaStajalista` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idOmiljenaStajalista` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `omiljenelinije`
 --
 ALTER TABLE `omiljenelinije`
-  MODIFY `idOmiljeneLinije` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idOmiljeneLinije` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `stajaliste`
 --
 ALTER TABLE `stajaliste`
-  MODIFY `idStajalista` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12326;
+  MODIFY `idStajalista` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12327;
 
 --
 -- AUTO_INCREMENT for table `tipprevoza`

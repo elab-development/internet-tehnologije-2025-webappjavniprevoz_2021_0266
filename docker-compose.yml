@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  # mysql
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=baza
+      - MYSQL_DATABASE=prevezime_db
+      - MYSQL_USER=baza
+      - MYSQL_PASSWORD=baza
+    ports:
+      - "3307:3306" #3307 da ne smeta lokalni MySQL
+    volumes:
+      # Automatski SQL dump u bazu pri prvom paljenju
+      - ./prevezime_db.sql:/docker-entrypoint-initdb.d/setup.sql
+      - db_data:/var/lib/mysql
+
+  # next.js
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app            # Ovo mapira trenutni folder u /app unutar kontejnera
+      - /app/node_modules # Ovo sprečava da lokalni node_modules pregazi onaj u kontejneru
+      - /app/.next        # Ovo čuva build fajlove kontejnera netaknutim
+    environment:
+      - DATABASE_URL=mysql://baza:baza@db:3306/prevezime_db
+      - JWT_SECRET=previse_tajna_lozinka
+    # Komanda 'npm run dev' omogućava Hot Reload
+    command: npm run dev
+volumes:
+  db_data:

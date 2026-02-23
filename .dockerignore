@@ -1,0 +1,24 @@
+# Dependency & Build folders
+node_modules
+.next
+out
+build
+
+
+
+# Database related
+prevezime_db.sql
+drizzle/
+drizzle.config.ts
+
+# Git
+.git
+.gitignore
+
+# IDE & OS files
+.vscode
+.DS_Store
+Thumbs.db
+
+# Documentation
+README.md
