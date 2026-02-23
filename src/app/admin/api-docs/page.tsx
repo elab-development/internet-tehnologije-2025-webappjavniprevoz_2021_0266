@@ -18,7 +18,7 @@ export default function AdminApiDocs() {
         docExpansion="list"
         defaultModelExpandDepth={5}
         requestInterceptor={(req) => {
-        req.credentials = 'include'; // KLJUČNA LINIJA: Šalje tvoj 'auth' cookie sa svakim klikom
+        req.credentials = 'include'; 
         return req;
         }}></SwaggerUI>
         </div>

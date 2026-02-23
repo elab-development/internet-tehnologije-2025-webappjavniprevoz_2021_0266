@@ -2,11 +2,11 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
-import { GoogleMap, useJsApiLoader, Polyline, Marker, InfoWindow } from '@react-google-maps/api';
-import { Heart, LogOut, MapPin, ChevronDown, ArrowLeft, CheckCircle2, Bus, Lock, UserCircle } from 'lucide-react';
+import { GoogleMap, useJsApiLoader, Polyline, Marker } from '@react-google-maps/api';
+import { Heart, LogOut, MapPin, ChevronDown, CheckCircle2, UserCircle } from 'lucide-react';
 import { Linija } from '@/app/komponente/linija';
 import { Stajaliste } from '@/app/komponente/stajaliste';
-import {StajalisteInfoWindow } from '@/app/komponente/StajalisteInfoWindow';
+import { StajalisteInfoWindow } from '@/app/komponente/StajalisteInfoWindow';
 
 const BOJE_TIPA: Record<string, string> = {
   'Autobus': '#3b82f6',
@@ -134,8 +134,6 @@ export default function GlavnaStrana() {
     } catch (e) { console.error(e); }
   };
 
- 
-
   const prikazaneLinijeFinal = useMemo(() => {
     const baza = view === 'fav-linije' ? linije.filter(l => omiljeneLinije.some(f => Number(f.idLinije) === Number(l.idLinije))) : linije;
     return baza.filter(l => l.brojLinije.toLowerCase().includes(searchQuery.toLowerCase()));
@@ -191,6 +189,24 @@ export default function GlavnaStrana() {
           </div>
           <input type="text" placeholder="Pretraži..." className="w-full bg-indigo-700/40 border border-indigo-400/30 rounded-2xl py-4 px-5 text-white placeholder-indigo-200 outline-none" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
         </div>
+
+        {/* --- DUGMAD ZA SMEROVE --- */}
+        {selektovanaLinija && (
+          <div className="px-6 py-4 bg-slate-50 border-b flex gap-2 animate-in fade-in slide-in-from-top-2 duration-300">
+            <button 
+              onClick={() => { setActiveSmer(0); setResetKey(prev => prev + 1); }}
+              className={`flex-1 py-2 px-3 rounded-xl text-[10px] font-black tracking-tighter transition-all shadow-sm ${activeSmer === 0 ? 'bg-indigo-600 text-white ring-2 ring-indigo-200' : 'bg-white text-slate-500 border border-slate-200 hover:bg-slate-50'}`}
+            >
+              SMER A
+            </button>
+            <button 
+              onClick={() => { setActiveSmer(1); setResetKey(prev => prev + 1); }}
+              className={`flex-1 py-2 px-3 rounded-xl text-[10px] font-black tracking-tighter transition-all shadow-sm ${activeSmer === 1 ? 'bg-indigo-600 text-white ring-2 ring-indigo-200' : 'bg-white text-slate-500 border border-slate-200 hover:bg-slate-50'}`}
+            >
+              SMER B
+            </button>
+          </div>
+        )}
 
         <div className="flex p-4 bg-slate-50 border-b gap-2">
           <button onClick={() => { setActiveTab('linije'); setView('default'); }} className={`flex-1 py-3 rounded-xl text-[11px] font-black tracking-widest ${activeTab === 'linije' ? 'bg-white text-indigo-600 shadow-md ring-1 ring-slate-200' : 'text-slate-400'}`}>LINIJE</button>

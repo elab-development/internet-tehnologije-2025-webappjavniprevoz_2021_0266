@@ -175,7 +175,7 @@ export default function AdminInterface() {
                       <>
                         <td className="p-4 font-black text-indigo-600 text-2xl">{item.brojLinije}</td>
                         <td className="p-4 font-bold text-gray-800">{item.naziv} <br/><span className="text-[10px] text-gray-400 font-normal">{item.pocetnaStanica} - {item.krajnjaStanica}</span></td>
-                        <td className="p-4 text-xs">ID: {item.idTipVozila}</td>
+                        <td className="p-4 text-xs">ID: {item.idTipaVozila}</td>
                       </>
                     )}
                     {tab === 'stajalista' && (
