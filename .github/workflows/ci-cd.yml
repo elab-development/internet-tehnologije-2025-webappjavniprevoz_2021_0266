@@ -2,39 +2,36 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: 
+      - develop
+      - main
   pull_request:
-    branches: [ main, develop ]
-
+    branches:
+      - main
 jobs:
-  test-and-build:
+  test:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout koda
-        uses: actions/checkout@v4
-
-      - name: Podešavanje Node.js okruženja
+      - uses: actions/checkout@v4
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
+      - run: npm install
+      - run: npm test
 
-      - name: Instalacija zavisnosti
-        run: npm install
+  build-and-deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
-      - name: Pokretanje testova
-        run: npm test || echo "Nema definisanih testova još uvek"
+      - name: Build Docker image
+        run: docker build -t prevezi-me-app .
 
-      - name: Build aplikacije
-        run: npm run build
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Build Docker image (Provera)
-        uses: docker/build-push-action@v5
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v2
         with:
-          context: .
-          push: false # Samo proveravamo da li build prolazi
-          tags: prevezi-me:latest
+          app-name: 'prevezi-me' 
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          images: 'prevezi-me-app'
