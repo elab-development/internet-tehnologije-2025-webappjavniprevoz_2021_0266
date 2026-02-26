@@ -19,7 +19,7 @@ export async function DELETE(
     const result = await db.delete(omiljenelinije)
       .where(
         and(
-          eq(omiljenelinije.idOmiljeneLinije, Number(id)),
+          eq(omiljenelinije.idLinije, Number(id)),
           eq(omiljenelinije.idKorisnik, ulogovaniId)
         )
       );

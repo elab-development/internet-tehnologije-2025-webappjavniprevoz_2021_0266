@@ -77,7 +77,7 @@ export default function GlavnaStrana() {
 
     const favoritZapis = omiljeneLinije.find(f => Number(f.idLinije) === Number(l.idLinije));
     if (favoritZapis) {
-      await fetch(`/api/korisnik/omiljene-linije/${favoritZapis.idOmiljeneLinije}`, { method: 'DELETE' });
+      await fetch(`/api/korisnik/omiljene-linije/${favoritZapis.idLinije}`, { method: 'DELETE' });
     } else {
       await fetch(`/api/korisnik/omiljene-linije`, {
         method: 'POST',
@@ -100,7 +100,7 @@ export default function GlavnaStrana() {
 
     const favoritZapis = omiljenaStajalista.find(f => Number(f.idStajalista) === Number(s.idStajalista));
     if (favoritZapis) {
-      await fetch(`/api/korisnik/omiljena-stajalista/${favoritZapis.idOmiljenaStajalista}`, { method: 'DELETE' });
+      await fetch(`/api/korisnik/omiljena-stajalista/${favoritZapis.idStajalista}`, { method: 'DELETE' });
     } else {
       await fetch(`/api/korisnik/omiljena-stajalista`, {
         method: 'POST',
